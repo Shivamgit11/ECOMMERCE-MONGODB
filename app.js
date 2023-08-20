@@ -4,7 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const errorController = require("./controllers/error");
-const mongoConnect = require("./util/database");
+const mongoConnect = require("./util/database").mongoConnect;
 
 const app = express();
 
@@ -17,6 +17,12 @@ const shopRoutes = require("./routes/shop");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
+
+// app.use((req, res) => {
+//   console.log("just chill buddyfault", req.originalUrl);
+//   res.sendFile(path.join(__dirname, `public/${req.url}`));
+// });
+
 app.use((req, res, next) => {
   // User.findById(1)
   //   .then(user => {
@@ -24,7 +30,8 @@ app.use((req, res, next) => {
   //     next();
   //   })
   //   .catch(err => console.log(err));
-});
+  next();
+})
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);

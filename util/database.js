@@ -8,25 +8,38 @@
 // module.exports = sequelize;
 
 //username---mailtoshivam2002
-//password--3f16ihIFyGsMgFGJ
-//IP Access List--152.58.133.106/32
+//password--vFn62nb1yRwQ03Yr
+//IP Access List--152.58.187.65/32
+
+//db-name--Nodejshivam.user
 
 //driver-code-->> mongodb+srv://mailtoshivam2002:<password>@cluster0.sj1aef9.mongodb.net/?retryWrites=true&w=majority
 const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
 
+let _db;
+
 const mongoConnect = (callback) => {
   MongoClient.connect(
-    "mongodb+srv://mailtoshivam2002:3f16ihIFyGsMgFGJ@cluster0.sj1aef9.mongodb.net/?retryWrites=true&w=majority"
+    `mongodb+srv://mailtoshivam2002:vFn62nb1yRwQ03Yr@cluster0.svqun7l.mongodb.net/?retryWrites=true&w=majority`
   )
     .then((client) => {
       console.log("Connected");
-      callback(client);
+      _db = client.db();
+      callback();
     })
     .catch((err) => {
-      console.log(err);
+      console.log("line no something", err);
+      throw err;
     });
 };
 
-module.exports = mongoConnect;
+const getDb = () => {
+  if (_db) {
+    return _db;
+  }
+  throw "No database found";
+};
 
+exports.mongoConnect = mongoConnect;
+exports.getDb = getDb;
