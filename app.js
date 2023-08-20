@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 
 const errorController = require("./controllers/error");
 const mongoConnect = require("./util/database").mongoConnect;
-const User = require('./models/user');
+const User = require("./models/user");
 
 const app = express();
 
@@ -18,21 +18,19 @@ const shopRoutes = require("./routes/shop");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-
 // app.use((req, res) => {
 //   console.log("just chill buddyfault", req.originalUrl);
 //   res.sendFile(path.join(__dirname, `public/${req.url}`));
 // });
 
 app.use((req, res, next) => {
-  User.findById('64e2724f9dac9303ca1fb476')
-    .then(user => {
+  User.findById("64e2724f9dac9303ca1fb476")
+    .then((user) => {
       req.user = user;
       next();
     })
-    .catch(err => console.log(err));
-  next();
-})  
+    .catch((err) => console.log(err));
+});
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
