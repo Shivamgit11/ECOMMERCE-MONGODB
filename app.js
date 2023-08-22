@@ -43,7 +43,7 @@ mongoose
     `mongodb+srv://mailtoshivam2002:vFn62nb1yRwQ03Yr@cluster0.svqun7l.mongodb.net/shop?retryWrites=true&w=majority`
   )
   .then((result) => {
-    app.listen(3000);
+    app.listen(3001);
     User.findOne().then((user) => {
       if (!user) {
         const user = new User({

@@ -63,6 +63,11 @@ userSchema.methods.removeFromCart = function (productId) {
   return this.save();
 };
 
+userSchema.methods.clearCart = function() {
+  this.cart = {items: []}
+  return this.save();
+}
+
 // userSchema.method.getCart = function () {
 //   const db = getDb();
 //   const productIds = this.cart.items.map((i) => {
